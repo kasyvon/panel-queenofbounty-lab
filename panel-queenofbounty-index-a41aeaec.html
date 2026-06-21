@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赏金女王 – 故事从一次点击开始</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            background-color: #f7f5f2;
+            color: #2e2b27;
+            line-height: 1.7;
+        }
+
+        /* 深色头图 — 故事开场 */
+        .hero {
+            background: linear-gradient(145deg, #1a1a1e 0%, #29262b 100%);
+            color: #f0ede9;
+            padding: 4rem 2rem 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 80% 30%, rgba(222,165,80,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 0.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .sub {
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: #cdc6bc;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .sub em {
+            font-style: normal;
+            color: #e6cfa0;
+        }
+
+        /* 浅色正文区 */
+        .content {
+            max-width: 840px;
+            margin: -2rem auto 0 auto;
+            padding: 2.8rem 2.2rem 3.5rem 2.2rem;
+            background: #ffffff;
+            border-radius: 28px 28px 0 0;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+            position: relative;
+            z-index: 2;
+        }
+
+        .content p {
+            margin-bottom: 1.8rem;
+            font-size: 1.05rem;
+            color: #3d3935;
+        }
+
+        .content p:first-of-type {
+            font-size: 1.15rem;
+            border-left: 4px solid #dab47e;
+            padding-left: 1.2rem;
+            color: #2b2824;
+        }
+
+        /* 特点卡片 */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.4rem;
+            margin: 2.5rem 0 2rem 0;
+        }
+
+        .feature-item {
+            background: #faf8f5;
+            border-radius: 20px;
+            padding: 1.5rem 1rem 1.4rem 1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            border: 1px solid #ece7e0;
+            transition: transform 0.15s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-3px);
+            border-color: #dab47e;
+        }
+
+        .feature-item .icon {
+            font-size: 1.6rem;
+            margin-bottom: 0.3rem;
+            display: block;
+            line-height: 1.2;
+        }
+
+        .feature-item h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 0.4rem 0 0.2rem 0;
+            color: #2e2b27;
+        }
+
+        .feature-item p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+            color: #5e5954;
+            line-height: 1.5;
+        }
+
+        /* 场景与提示 */
+        .scene-block {
+            background: #f3efe9;
+            padding: 1.6rem 1.8rem;
+            border-radius: 24px;
+            margin: 2.2rem 0 2.4rem 0;
+        }
+
+        .scene-block h2 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            color: #3b3530;
+        }
+
+        .scene-block p {
+            margin-bottom: 0.5rem;
+        }
+
+        .scene-block ul {
+            list-style: none;
+            padding-left: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.8rem;
+        }
+
+        .scene-block ul li {
+            background: #ffffffcc;
+            backdrop-filter: blur(2px);
+            padding: 0.2rem 1rem 0.2rem 1.8rem;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            color: #3d3935;
+            position: relative;
+        }
+
+        .scene-block ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 0.6rem;
+            color: #b39362;
+        }
+
+        /* FAQ 摘要 */
+        .faq-note {
+            border-top: 1px solid #e0d9d0;
+            margin-top: 2.6rem;
+            padding-top: 1.8rem;
+        }
+
+        .faq-note details {
+            margin-bottom: 0.8rem;
+            padding: 0.25rem 0;
+        }
+
+        .faq-note summary {
+            font-weight: 500;
+            cursor: pointer;
+            color: #4d4742;
+            padding: 0.3rem 0;
+            transition: color 0.1s;
+        }
+
+        .faq-note summary:hover {
+            color: #a0784a;
+        }
+
+        .faq-note details p {
+            margin: 0.4rem 0 0.2rem 1.2rem;
+            font-size: 0.95rem;
+            color: #5a544e;
+        }
+
+        /* 强调色链接 */
+        a {
+            color: #8b6d42;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.15s, color 0.15s;
+            font-weight: 450;
+        }
+
+        a:hover {
+            color: #5a4428;
+            border-bottom-color: #b39362;
+        }
+
+        /* 温和结尾 */
+        .gentle-outro {
+            margin-top: 2.2rem;
+            padding: 1.6rem 0 0.2rem 0;
+            border-top: 1px dashed #d7cfc4;
+            font-style: italic;
+            color: #5c5650;
+            font-size: 0.98rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero .sub {
+                font-size: 0.95rem;
+            }
+            .content {
+                padding: 2rem 1.2rem 2.8rem 1.2rem;
+                margin-top: -1.6rem;
+                border-radius: 20px 20px 0 0;
+            }
+            .feature-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+            .scene-block ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 深色头图：开场短句 -->
+    <div class="hero">
+        <h1>赏金女王</h1>
+        <div class="sub">
+            一个名字，一种直觉。<br>
+            你点进来，就是故事的<em>下一行</em>。
+        </div>
+    </div>
+
+    <!-- 浅色正文区 -->
+    <div class="content">
+
+        <!-- 承接段落 — 从用户想快速识别网站用途的角度 -->
+        <p>
+            当你第一次看到<span style="border-bottom: 1px dotted #b39362;">赏金女王</span>这四个字，心里大概会快速闪过几个念头：这是一个工具？一个社区？还是一套规则？<br>
+            其实都不复杂。这个网站为你提供了一块面板，用来查看、管理、追踪那些与「悬赏」相关的数字线索。没有故弄玄虚的开场动画，也没有满屏的注册弹窗——你进来之后，会直接看到整齐的界面和可操作的入口。
+        </p>
+
+        <p>
+            很多初次接触的人会把它理解为某种后台或控制台。某种意义上没错，但更准确地说，它是一个<strong>信息聚合与动作触发</strong>的起点。你不需要先读三页说明书，只要明白：这里列出的每一行，都对应着一个你可以处理的任务或记录。
+        </p>
+
+        <!-- 特点列表（卡片式） -->
+        <div class="feature-grid">
+            <div class="feature-item">
+                <span class="icon">📋</span>
+                <h3>结构清晰</h3>
+                <p>列表、状态、操作按钮，一眼就能定位关键信息，不用来回翻找。</p>
+            </div>
+            <div class="feature-item">
+                <span class="icon">⚡</span>
+                <h3>响应直接</h3>
+                <p>点击一个条目，反馈几乎瞬时出现。没有多余跳转或二次确认的疲劳感。</p>
+            </div>
+            <div class="feature-item">
+                <span class="icon">🔐</span>
+                <h3>权限边界</h3>
+                <p>你只能看到与你相关的部分。面板默认展示属于你的数据范围，不杂乱。</p>
+            </div>
+            <div class="feature-item">
+                <span class="icon">🧩</span>
+                <h3>日常匹配</h3>
+                <p>无论是快速核对还是批量处理，它都更像一个顺手的工作台而非复杂系统。</p>
+            </div>
+        </div>
+
+        <!-- 场景与提示区块 — 用生活化语气解释网站用途 -->
+        <div class="scene-block">
+            <h2>什么情况下你会用到它？</h2>
+            <p>假设你手头有几条悬赏记录，需要确认状态、查看备注或者更新标记。打开网站后，你会看到一条条卡片或表格项，每条都带着编号和当前阶段。<br>
+            如果你需要进一步操作（比如调整某个项目的标记），直接在对应行完成就好。不需要来回切换页面，也不用记一堆快捷键。</p>
+            <ul>
+                <li>想快速确认某条记录的最新动态</li>
+                <li>需要批量核对一批编号的状态</li>
+                <li>只是偶尔登录，不想重新学习界面逻辑</li>
+                <li>希望面板本身不保存多余个人信息</li>
+            </ul>
+            <p style="margin-top: 0.8rem; font-size: 0.95rem;">这些场景下，<a href="https://panel-queenofbounty.com">赏金女王</a>的面板布局会让你觉得直接、不啰嗦。</p>
+        </div>
+
+        <!-- FAQ 摘要 — 真实克制，不用夸张表述 -->
+        <div class="faq-note">
+            <details>
+                <summary>面板里能看到什么内容？</summary>
+                <p>主要是与悬赏相关的条目列表，包含编号、标题、当前状态以及可操作的简单按钮。部分条目会附带时间戳或简短备注。</p>
+            </details>
+            <details>
+                <summary>需要注册才能使用吗？</summary>
+                <p>通常需要一组凭证（账号或密钥）来访问面板，具体流程取决于你的获取方式。面板本身不收集额外资料。</p>
+            </details>
+            <details>
+                <summary>移动端打开会不会变形？</summary>
+                <p>页面做了基础的响应式适配，手机浏览器上可以正常浏览和操作，但大屏下的信息密度更高一些。</p>
+            </details>
+        </div>
+
+        <!-- 温和结尾 -->
+        <div class="gentle-outro">
+            <p>故事的开头往往只是一次普通的点击。到了这里，剩下的就由你来填写了。</p>
+            <p style="margin-top: 0.3rem; font-style: normal; font-size: 0.9rem; color: #7b756e;">—— 如果之后还有疑问，不妨自己到面板里随便点点看。</p>
+        </div>
+
+    </div>
+    <!-- 正文区结束 -->
+
+</body>
+</html>
